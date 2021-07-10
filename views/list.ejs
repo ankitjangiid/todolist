@@ -1,0 +1,35 @@
+<%- include("header") -%>
+
+<div class="box" id="heading">
+    <h1> <%= listTitle %> </h1>
+</div>
+
+<div class="box">
+
+
+    <% for(let i = 0; i < newListItem.length; i++) { %>
+
+    <form action="/delete" method="POST">
+        <div class="item">
+            <!-- conChange is just to submit the form whwn checkbox is checked -->
+            <!-- value os each checkbox will be equal to its '_id' in DB to identify the checkbox easily -->
+            <!--⭐ Now here value means that if i run this code 'req.body.deleteItem' then its value will be the '_id' -->
+            <input type="checkbox" name="deleteItem" value="<%= newListItem[i]._id %>" onChange="this.form.submit()">
+            <p><%= newListItem[i].name %></p>
+        </div>
+        <!--⭐ Now since we already declare the value of checkbox, we can't change it because we need that value to delete
+            but now we also need the name of the list where you want ot delete the item -->
+        <!--⭐ So here we use another 'input' tag which has type 'hidden' so that user can't see it and can't change it
+            but we'll use it to pass the list name -->
+        <input type="hidden" name="listName" value="<%= listTitle %>"></input>
+    </form>
+
+    <% } %>
+
+    <form class="item" action="/" method="POST">
+        <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+        <button type="submit" name="list" value=<%= listTitle%>>+</button>
+    </form>
+</div>
+
+<%- include("footer") -%>
